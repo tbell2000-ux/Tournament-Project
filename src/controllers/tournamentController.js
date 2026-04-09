@@ -31,7 +31,7 @@ exports.getTournamentById = async (req, res) => {
   res.json(tournament);
 };
 
-// ✅ UPDATE
+// UPDATE
 exports.updateTournament = async (req, res) => {
   const tournament = await Tournament.findByPk(req.params.id);
 
@@ -43,7 +43,7 @@ exports.updateTournament = async (req, res) => {
   res.json(tournament);
 };
 
-// ✅ DELETE
+// DELETE
 exports.deleteTournament = async (req, res) => {
   const tournament = await Tournament.findByPk(req.params.id);
 

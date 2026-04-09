@@ -6,7 +6,7 @@ router.get("/", matchController.getAllMatches);
 router.post("/", matchController.createMatch);
 router.get("/:id", matchController.getMatchById);
 
-// ✅ ADD THESE
+
 router.put("/:id", matchController.updateMatch);
 router.delete("/:id", matchController.deleteMatch);
 

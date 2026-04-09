@@ -6,7 +6,7 @@ router.get("/", tournamentController.getAllTournaments);
 router.post("/", tournamentController.createTournament);
 router.get("/:id", tournamentController.getTournamentById);
 
-// ✅ ADD THESE
+
 router.put("/:id", tournamentController.updateTournament);
 router.delete("/:id", tournamentController.deleteTournament);
 

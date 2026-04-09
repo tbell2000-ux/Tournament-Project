@@ -50,7 +50,7 @@ exports.getMatchById = async (req, res) => {
   res.json(match);
 };
 
-// ✅ UPDATE
+// UPDATE
 exports.updateMatch = async (req, res) => {
   const match = await Match.findByPk(req.params.id);
 
@@ -62,7 +62,7 @@ exports.updateMatch = async (req, res) => {
   res.json(match);
 };
 
-// ✅ DELETE
+// DELETE
 exports.deleteMatch = async (req, res) => {
   const match = await Match.findByPk(req.params.id);
 

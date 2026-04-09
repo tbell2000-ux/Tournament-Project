@@ -28,7 +28,7 @@ exports.getTeamById = async (req, res) => {
   res.json(team);
 };
 
-// ✅ UPDATE
+// UPDATE
 exports.updateTeam = async (req, res) => {
   const team = await Team.findByPk(req.params.id);
 
@@ -40,7 +40,7 @@ exports.updateTeam = async (req, res) => {
   res.json(team);
 };
 
-// ✅ DELETE
+// DELETE
 exports.deleteTeam = async (req, res) => {
   const team = await Team.findByPk(req.params.id);
 

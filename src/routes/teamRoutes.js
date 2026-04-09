@@ -6,7 +6,7 @@ router.get("/", teamController.getAllTeams);
 router.post("/", teamController.createTeam);
 router.get("/:id", teamController.getTeamById);
 
-// ✅ ADD THESE
+
 router.put("/:id", teamController.updateTeam);
 router.delete("/:id", teamController.deleteTeam);
 
