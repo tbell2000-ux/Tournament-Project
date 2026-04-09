@@ -1,6 +1,5 @@
 # Tournament-Project
 
-
 ## Project Overview
 This project is a Tournament Bracket REST API that allows users to create and manage tournaments. Users can register teams, record match results, and automatically advance winners through rounds until a champion is determined. The API follows CRUD operations and is built using Node.js, Express, and a database.
 
@@ -11,7 +10,7 @@ This project is a Tournament Bracket REST API that allows users to create and ma
 ### 1. Clone the repository
 git clone https://github.com/tbell2000-ux/Tournament-Project.git
 
-### 2. Navigate into the project
+### 2. Navigate into the project in your terminal
 cd Tournament-Project
 
 ### 3. Install dependencies
@@ -115,7 +114,3 @@ http://localhost:3000
 
 ---
 
-## Notes
-- All requests should be sent as JSON
-- Make sure the server is running before testing endpoints
-- Use Postman for testing API routes
