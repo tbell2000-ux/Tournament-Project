@@ -31,7 +31,7 @@ http://localhost:3000
 
 ---
 
-## API Endpoints (CRUD Documentation)
+## API Endpoints (CRUD Documentation) https://tournament-api.docs.buildwithfern.com/tournament-api/create-a-new
 
 ### Tournaments Resource
 
