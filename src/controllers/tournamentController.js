@@ -1,56 +1,86 @@
 const { Tournament } = require("../../models");
 
-// GET all
-exports.getAllTournaments = async (req, res) => {
-  const tournaments = await Tournament.findAll();
-  res.json(tournaments);
+// GET ALL
+const getAllTournaments = async (req, res) => {
+  try {
+    const data = await Tournament.findAll();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// GET ONE
+const getTournament = async (req, res) => {
+  try {
+    const data = await Tournament.findByPk(req.params.id);
+
+    if (!data) {
+      return res.status(404).json({ message: "Not found" });
+    }
+
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 // CREATE
-exports.createTournament = async (req, res) => {
+const createTournament = async (req, res) => {
   try {
-    if (!req.body.name) {
-      return res.status(400).json({ message: "Name is required" });
+    const { name } = req.body;
+
+    if (!name) {
+      return res.status(400).json({ message: "Name required" });
     }
 
-    const tournament = await Tournament.create(req.body);
-    res.status(201).json(tournament);
+    const created = await Tournament.create({ name });
+
+    res.status(201).json(created);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
-};
-
-// GET by ID
-exports.getTournamentById = async (req, res) => {
-  const tournament = await Tournament.findByPk(req.params.id);
-
-  if (!tournament) {
-    return res.status(404).json({ message: "Tournament not found" });
-  }
-
-  res.json(tournament);
 };
 
 // UPDATE
-exports.updateTournament = async (req, res) => {
-  const tournament = await Tournament.findByPk(req.params.id);
+const updateTournament = async (req, res) => {
+  try {
+    const data = await Tournament.findByPk(req.params.id);
 
-  if (!tournament) {
-    return res.status(404).json({ message: "Tournament not found" });
+    if (!data) {
+      return res.status(404).json({ message: "Not found" });
+    }
+
+    await data.update(req.body);
+
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
-
-  await tournament.update(req.body);
-  res.json(tournament);
 };
 
 // DELETE
-exports.deleteTournament = async (req, res) => {
-  const tournament = await Tournament.findByPk(req.params.id);
+const deleteTournament = async (req, res) => {
+  try {
+    const data = await Tournament.findByPk(req.params.id);
 
-  if (!tournament) {
-    return res.status(404).json({ message: "Tournament not found" });
+    if (!data) {
+      return res.status(404).json({ message: "Not found" });
+    }
+
+    await data.destroy();
+
+    res.json({ message: "Deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
+};
 
-  await tournament.destroy();
-  res.json({ message: "Tournament deleted" });
+// EXPORT ONLY ONCE
+module.exports = {
+  getAllTournaments,
+  getTournament,
+  createTournament,
+  updateTournament,
+  deleteTournament
 };

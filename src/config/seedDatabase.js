@@ -1,52 +1,45 @@
-const db = require("../models");
+const db = require("../../models");
+const bcrypt = require("bcryptjs");
 
-const seedDatabase = async () => {
+async function seedDatabase() {
   try {
-    // Reset tables first (optional)
     await db.sequelize.sync({ force: true });
+
     console.log("Database reset.");
 
-    // 1. Create a Tournament
+    // USERS
+    const hashedPassword = await bcrypt.hash("1234", 10);
+
+    await db.User.create({
+      username: "admin@test.com",
+      password: hashedPassword,
+      role: "admin"
+    });
+
+    // TOURNAMENTS
     const tournament = await db.Tournament.create({
-      name: "Spring Championship",
-      status: "active",
+      name: "Spring Cup"
     });
 
-    // 2. Add Teams
-    const teams = await Promise.all([
-      db.Team.create({ name: "Red Raptors", tournamentId: tournament.id }),
-      db.Team.create({ name: "Blue Bulls", tournamentId: tournament.id }),
-      db.Team.create({ name: "Green Giants", tournamentId: tournament.id }),
-      db.Team.create({ name: "Yellow Yaks", tournamentId: tournament.id }),
-    ]);
+    // TEAMS
+    const teamA = await db.Team.create({ name: "Team A" });
+    const teamB = await db.Team.create({ name: "Team B" });
 
-    // 3. Create Matches (Round 1)
-    const match1 = await db.Match.create({
-      tournamentId: tournament.id,
-      teamAId: teams[0].id,
-      teamBId: teams[1].id,
-      scoreA: 3,
-      scoreB: 1,
-      winnerId: teams[0].id,
+    // MATCHES (ONLY USE FIELDS YOU ACTUALLY HAVE)
+    await db.Match.create({
       round: 1,
-    });
-
-    const match2 = await db.Match.create({
-      tournamentId: tournament.id,
-      teamAId: teams[2].id,
-      teamBId: teams[3].id,
       scoreA: 2,
-      scoreB: 2,
-      winnerId: null, // tie, or leave null
-      round: 1,
+      scoreB: 1,
+      teamAId: teamA.id,
+      teamBId: teamB.id
     });
 
     console.log("Database seeded successfully.");
     process.exit();
   } catch (error) {
-    console.error("Error seeding database:", error);
+    console.error("Seed error:", error);
     process.exit(1);
   }
-};
+}
 
 seedDatabase();
