@@ -1,17 +1,44 @@
 const sequelize = require("../database");
+const { DataTypes } = require("sequelize");
 
-const Match = require("./Match");
-const Team = require("./Team");
-const Tournament = require("./Tournament");
-const User = require("./User");
+// Tournament Team model
+const Team = sequelize.define("Team", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+});
 
-const db = {};
+// Match model (basic structure for bracket games)
+const Match = sequelize.define("Match", {
+  round: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  teamA: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  teamB: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  scoreA: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  scoreB: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  winner: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+});
 
-db.sequelize = sequelize;
-
-db.Match = Match;
-db.Team = Team;
-db.Tournament = Tournament;
-db.User = User;
-
-module.exports = db;
+module.exports = {
+  sequelize,
+  Team,
+  Match,
+};

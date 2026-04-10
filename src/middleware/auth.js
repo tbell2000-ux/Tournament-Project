@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-exports.verifyToken = (req, res, next) => {
+const JWT_SECRET = "supersecretkey123";
+
+module.exports = (req, res, next) => {
   const header = req.headers.authorization;
 
   if (!header) {
@@ -10,18 +12,10 @@ exports.verifyToken = (req, res, next) => {
   const token = header.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
     next();
   } catch (err) {
-    return res.status(403).json({ message: "Invalid token" });
+    return res.status(401).json({ message: "Invalid token" });
   }
-};
-
-exports.isAdmin = (req, res, next) => {
-  if (req.user.role !== "admin") {
-    return res.status(403).json({ message: "Admins only" });
-  }
-
-  next();
 };
