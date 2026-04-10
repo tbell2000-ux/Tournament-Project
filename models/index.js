@@ -1,17 +1,17 @@
-const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: "database.sqlite",
-});
+const sequelize = require("../database");
 
-const Team = require("./team")(sequelize, DataTypes);
-const Tournament = require("./tournament")(sequelize, DataTypes);
-const Match = require("./match")(sequelize, DataTypes);
+const Match = require("./Match");
+const Team = require("./Team");
+const Tournament = require("./Tournament");
+const User = require("./User");
 
-// Associations
-Team.hasMany(Match, { as: "teamA", foreignKey: "teamAId" });
-Team.hasMany(Match, { as: "teamB", foreignKey: "teamBId" });
-Match.belongsTo(Team, { as: "teamA", foreignKey: "teamAId" });
-Match.belongsTo(Team, { as: "teamB", foreignKey: "teamBId" });
+const db = {};
 
-module.exports = { sequelize, Team, Tournament, Match };
+db.sequelize = sequelize;
+
+db.Match = Match;
+db.Team = Team;
+db.Tournament = Tournament;
+db.User = User;
+
+module.exports = db;
