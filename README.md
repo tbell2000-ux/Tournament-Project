@@ -16,14 +16,7 @@ cd Tournament-Project
 ### 3. Install dependencies
 npm install
 
-### 4. Create a .env file in the root folder
-Add the following:
-
-PORT=3000
-DATABASE_URL=your_database_connection_string
-JWT_SECRET=your_secret_key
-
-### 5. Run the server
+### 4. Run the server
 npm start
 
 The server will run on:
