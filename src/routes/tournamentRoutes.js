@@ -9,7 +9,7 @@ const {
   deleteTournament
 } = require("../controllers/tournamentController");
 
-// TEMP FIX (remove auth until tests pass)
+
 router.post("/", createTournament);
 router.get("/", getAllTournaments);
 router.get("/:id", getTournament);

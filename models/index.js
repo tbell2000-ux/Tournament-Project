@@ -17,17 +17,17 @@ fs.readdirSync(__dirname)
 
     let model;
 
-    // CASE 1: function-based model
+    
     if (typeof modelExport === "function" && modelExport.length === 2) {
       model = modelExport(sequelize, Sequelize.DataTypes);
     }
 
-    // CASE 2: class-based model (already defined Sequelize model)
+    
     else if (modelExport && modelExport.name) {
       model = modelExport;
     }
 
-    // fallback safety
+    
     else {
       throw new Error(`Invalid model format in file: ${file}`);
     }

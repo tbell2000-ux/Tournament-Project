@@ -25,7 +25,7 @@ async function seedDatabase() {
     const teamA = await db.Team.create({ name: "Team A" });
     const teamB = await db.Team.create({ name: "Team B" });
 
-    // MATCHES (ONLY USE FIELDS YOU ACTUALLY HAVE)
+    // MATCHES 
     await db.Match.create({
       round: 1,
       scoreA: 2,
