@@ -35,18 +35,15 @@ http://localhost:3000
 - URL: /api/tournaments
 - Required Parameters (Body):
 {
-  "name": "Tournament Name",
-  "teams": ["Team A", "Team B"]
-}
-
+  "name": "Spring Cup"
+}'
 - Response:
 {
-  "message": "Tournament created successfully",
-  "data": {
-    "id": 1,
-    "name": "Tournament Name",
-    "teams": ["Team A", "Team B"]
-  }
+  "status": "upcoming",
+  "id": 1,
+  "name": "Spring Cup",
+  "updatedAt": "2026-04-09T20:28:07.036Z",
+  "createdAt": "2026-04-09T20:28:07.036Z"
 }
 
 ---
@@ -56,15 +53,7 @@ http://localhost:3000
 - URL: /api/tournaments
 
 - Response:
-{
-  "data": [
-    {
-      "id": 1,
-      "name": "Tournament Name"
-    }
-  ]
-}
-
+[]
 ---
 
 ### Get Tournament by ID
@@ -73,10 +62,11 @@ http://localhost:3000
 
 - Response:
 {
-  "data": {
-    "id": 1,
-    "name": "Tournament Name"
-  }
+  "id": 2,
+  "name": "Spring Cup",
+  "status": "upcoming",
+  "createdAt": "2026-04-09T20:56:04.032Z",
+  "updatedAt": "2026-04-09T20:56:04.032Z"
 }
 
 ---
@@ -86,14 +76,17 @@ http://localhost:3000
 - URL: /api/tournaments/:id
 - Required Parameters (Body):
 {
-  "name": "Updated Tournament Name"
-}
-
+  "name": "Summer Cup",
+  "status": "ongoing"
+}'
 - Response:
 {
-  "message": "Tournament updated successfully"
+  "id": 1,
+  "name": "Summer Cup",
+  "status": "ongoing",
+  "createdAt": "2026-04-09T20:28:07.036Z",
+  "updatedAt": "2026-04-09T20:46:50.327Z"
 }
-
 ---
 
 ### Delete Tournament
@@ -102,8 +95,7 @@ http://localhost:3000
 
 - Response:
 {
-  "message": "Tournament deleted successfully"
+  "message": "Tournament deleted"
 }
-
 ---
 
