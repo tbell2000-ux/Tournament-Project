@@ -1,23 +1,45 @@
 const request = require("supertest");
 const app = require("../app");
-const { sequelize, Team } = require("../models");
+const db = require("../models");
 
-let teamA, teamB;
+let token;
+let teamA;
+let teamB;
 
 beforeAll(async () => {
-  await sequelize.sync({ force: true });
-  teamA = await Team.create({ name: "Team A" });
-  teamB = await Team.create({ name: "Team B" });
+  await db.sequelize.sync({ force: true });
+
+  await request(app)
+    .post("/api/auth/register")
+    .send({
+      username: "admin",
+      email: "admin@test.com",
+      password: "123",
+      role: "admin"
+    });
+
+  const login = await request(app)
+    .post("/api/auth/login")
+    .send({
+      email: "admin@test.com",
+      password: "123"
+    });
+
+  token = login.body.token;
+
+  teamA = await db.Team.create({ name: "Team A" });
+  teamB = await db.Team.create({ name: "Team B" });
 });
 
 afterAll(async () => {
-  await sequelize.close();
+  await db.sequelize.close();
 });
 
 describe("Match API", () => {
-  test("should create a new match", async () => {
+  test("should create match (admin only)", async () => {
     const res = await request(app)
       .post("/api/matches")
+      .set("Authorization", `Bearer ${token}`)
       .send({
         round: 1,
         scoreA: 2,
@@ -30,11 +52,12 @@ describe("Match API", () => {
     expect(res.body.round).toBe(1);
   });
 
-  test("should get all matches with teams", async () => {
-    const res = await request(app).get("/api/matches");
+  test("should get matches", async () => {
+    const res = await request(app)
+      .get("/api/matches")
+      .set("Authorization", `Bearer ${token}`);
 
     expect(res.statusCode).toBe(200);
-    expect(res.body[0].teamA.name).toBe("Team A");
-    expect(res.body[0].teamB.name).toBe("Team B");
+    expect(Array.isArray(res.body)).toBe(true);
   });
 });

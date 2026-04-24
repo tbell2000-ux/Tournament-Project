@@ -1,19 +1,40 @@
 const request = require("supertest");
 const app = require("../app");
-const { sequelize } = require("../models");
+const db = require("../models");
+
+let token;
 
 beforeAll(async () => {
-  await sequelize.sync({ force: true });
+  await db.sequelize.sync({ force: true });
+
+  await request(app)
+    .post("/api/auth/register")
+    .send({
+      username: "admin",
+      email: "admin@test.com",
+      password: "123",
+      role: "admin"
+    });
+
+  const login = await request(app)
+    .post("/api/auth/login")
+    .send({
+      email: "admin@test.com",
+      password: "123"
+    });
+
+  token = login.body.token;
 });
 
 afterAll(async () => {
-  await sequelize.close();
+  await db.sequelize.close();
 });
 
 describe("Tournament API", () => {
-  test("should create a new tournament", async () => {
+  test("should create tournament (admin only)", async () => {
     const res = await request(app)
       .post("/api/tournaments")
+      .set("Authorization", `Bearer ${token}`)
       .send({ name: "Spring Cup" });
 
     expect(res.statusCode).toBe(201);

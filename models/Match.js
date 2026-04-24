@@ -16,5 +16,17 @@ module.exports = (sequelize, DataTypes) => {
     teamBId: DataTypes.INTEGER
   });
 
+  Match.associate = (models) => {
+    Match.belongsTo(models.Team, {
+      as: "teamA",
+      foreignKey: "teamAId"
+    });
+
+    Match.belongsTo(models.Team, {
+      as: "teamB",
+      foreignKey: "teamBId"
+    });
+  };
+
   return Match;
 };

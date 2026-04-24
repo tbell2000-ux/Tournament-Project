@@ -1,23 +1,40 @@
-const { Match, Team } = require("../../models");
+const db = require("../../models");
 
-// GET all matches
+const Match = db.Match;
+const Team = db.Team;
+
+/*
+GET ALL MATCHES
+*/
 exports.getAllMatches = async (req, res) => {
   try {
     const matches = await Match.findAll({
       include: [
-        { model: Team, as: "teamA" },
-        { model: Team, as: "teamB" }
+        {
+          model: Team,
+          as: "teamA",
+          required: false
+        },
+        {
+          model: Team,
+          as: "teamB",
+          required: false
+        }
       ]
     });
 
-    res.json(matches);
+    return res.status(200).json(matches);
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Error retrieving matches" });
+    console.log("GET MATCHES ERROR:", err);
+    return res.status(500).json({
+      message: "Error retrieving matches"
+    });
   }
 };
 
-// CREATE match
+/*
+CREATE MATCH
+*/
 exports.createMatch = async (req, res) => {
   try {
     const { round, scoreA, scoreB, teamAId, teamBId } = req.body;
@@ -38,56 +55,78 @@ exports.createMatch = async (req, res) => {
 
     return res.status(201).json(match);
   } catch (err) {
-    console.log(err);
-    return res.status(400).json({ message: err.message });
+    console.log("CREATE MATCH ERROR:", err);
+    return res.status(400).json({
+      message: err.message
+    });
   }
 };
 
-// GET match by ID
+/*
+GET MATCH BY ID
+*/
 exports.getMatchById = async (req, res) => {
   try {
     const match = await Match.findByPk(req.params.id);
 
     if (!match) {
-      return res.status(404).json({ message: "Match not found" });
+      return res.status(404).json({
+        message: "Match not found"
+      });
     }
 
-    res.json(match);
+    return res.status(200).json(match);
   } catch (err) {
-    res.status(500).json({ message: "Error retrieving match" });
+    return res.status(500).json({
+      message: "Error retrieving match"
+    });
   }
 };
 
-// UPDATE match
+/*
+UPDATE MATCH
+*/
 exports.updateMatch = async (req, res) => {
   try {
     const match = await Match.findByPk(req.params.id);
 
     if (!match) {
-      return res.status(404).json({ message: "Match not found" });
+      return res.status(404).json({
+        message: "Match not found"
+      });
     }
 
     await match.update(req.body);
 
-    res.json(match);
+    return res.status(200).json(match);
   } catch (err) {
-    res.status(500).json({ message: "Error updating match" });
+    return res.status(500).json({
+      message: "Error updating match"
+    });
   }
 };
 
-// DELETE match
+/*
+DELETE MATCH
+*/
 exports.deleteMatch = async (req, res) => {
   try {
     const match = await Match.findByPk(req.params.id);
 
     if (!match) {
-      return res.status(404).json({ message: "Match not found" });
+      return res.status(404).json({
+        message: "Match not found"
+      });
     }
 
     await match.destroy();
 
-    res.json({ message: "Match deleted" });
+    return res.status(200).json({
+      message: "Match deleted"
+    });
   } catch (err) {
-    res.status(500).json({ message: "Error deleting match" });
+    return res.status(500).json({
+      message: "Error deleting match"
+    });
   }
 };
