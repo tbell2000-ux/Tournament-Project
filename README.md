@@ -16,14 +16,7 @@ cd Tournament-Project
 ### 3. Install dependencies
 npm install
 
-### 4. Create a .env file in the root folder
-Add the following:
-
-PORT=3000
-DATABASE_URL=your_database_connection_string
-JWT_SECRET=your_secret_key
-
-### 5. Run the server
+### 4. Run the server
 npm start
 
 The server will run on:
@@ -41,21 +34,22 @@ http://localhost:3000
 - Method: POST
 - URL: /api/tournaments
 - Required Parameters (Body):
+```
 {
-  "name": "Tournament Name",
-  "teams": ["Team A", "Team B"]
-}
+  "name": "Spring Cup"
+}'
 
+```
 - Response:
+```
 {
-  "message": "Tournament created successfully",
-  "data": {
-    "id": 1,
-    "name": "Tournament Name",
-    "teams": ["Team A", "Team B"]
-  }
+  "status": "upcoming",
+  "id": 1,
+  "name": "Spring Cup",
+  "updatedAt": "2026-04-09T20:28:07.036Z",
+  "createdAt": "2026-04-09T20:28:07.036Z"
 }
-
+```
 ---
 
 ### Get All Tournaments
@@ -63,15 +57,9 @@ http://localhost:3000
 - URL: /api/tournaments
 
 - Response:
-{
-  "data": [
-    {
-      "id": 1,
-      "name": "Tournament Name"
-    }
-  ]
-}
-
+```
+[]
+```
 ---
 
 ### Get Tournament by ID
@@ -79,12 +67,15 @@ http://localhost:3000
 - URL: /api/tournaments/:id
 
 - Response:
+```
 {
-  "data": {
-    "id": 1,
-    "name": "Tournament Name"
-  }
+  "id": 2,
+  "name": "Spring Cup",
+  "status": "upcoming",
+  "createdAt": "2026-04-09T20:56:04.032Z",
+  "updatedAt": "2026-04-09T20:56:04.032Z"
 }
+```
 
 ---
 
@@ -92,14 +83,22 @@ http://localhost:3000
 - Method: PUT
 - URL: /api/tournaments/:id
 - Required Parameters (Body):
+```
 {
-  "name": "Updated Tournament Name"
-}
-
+  "name": "Summer Cup",
+  "status": "ongoing"
+}'
+```
 - Response:
+```
 {
-  "message": "Tournament updated successfully"
+  "id": 1,
+  "name": "Summer Cup",
+  "status": "ongoing",
+  "createdAt": "2026-04-09T20:28:07.036Z",
+  "updatedAt": "2026-04-09T20:46:50.327Z"
 }
+```
 
 ---
 
@@ -108,9 +107,11 @@ http://localhost:3000
 - URL: /api/tournaments/:id
 
 - Response:
+```
 {
-  "message": "Tournament deleted successfully"
+  "message": "Tournament deleted"
 }
 
+```
 ---
 
