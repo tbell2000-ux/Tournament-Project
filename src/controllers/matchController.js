@@ -3,9 +3,9 @@ const db = require("../../models");
 const Match = db.Match;
 const Team = db.Team;
 
-/*
-GET ALL MATCHES
-*/
+
+// GET ALL MATCHES
+
 exports.getAllMatches = async (req, res) => {
   try {
     const matches = await Match.findAll({
@@ -32,9 +32,9 @@ exports.getAllMatches = async (req, res) => {
   }
 };
 
-/*
-CREATE MATCH
-*/
+
+// CREATE MATCH
+
 exports.createMatch = async (req, res) => {
   try {
     const { round, scoreA, scoreB, teamAId, teamBId } = req.body;
@@ -62,9 +62,9 @@ exports.createMatch = async (req, res) => {
   }
 };
 
-/*
-GET MATCH BY ID
-*/
+
+// GET MATCH BY ID
+
 exports.getMatchById = async (req, res) => {
   try {
     const match = await Match.findByPk(req.params.id);
@@ -83,9 +83,9 @@ exports.getMatchById = async (req, res) => {
   }
 };
 
-/*
-UPDATE MATCH
-*/
+
+// UPDATE MATCH
+
 exports.updateMatch = async (req, res) => {
   try {
     const match = await Match.findByPk(req.params.id);
@@ -106,9 +106,9 @@ exports.updateMatch = async (req, res) => {
   }
 };
 
-/*
-DELETE MATCH
-*/
+
+// DELETE MATCH
+
 exports.deleteMatch = async (req, res) => {
   try {
     const match = await Match.findByPk(req.params.id);

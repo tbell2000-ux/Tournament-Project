@@ -7,9 +7,9 @@ const { User } = require("../../models");
 
 const SECRET = "supersecretkey123";
 
-/*
-REGISTER
-*/
+
+// REGISTER
+
 router.post("/register", async (req, res) => {
   const { username, email, password, role } = req.body;
 
@@ -28,9 +28,9 @@ router.post("/register", async (req, res) => {
   res.json(user);
 });
 
-/*
-LOGIN
-*/
+
+//  LOGIN
+
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
