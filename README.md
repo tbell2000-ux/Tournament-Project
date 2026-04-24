@@ -24,6 +24,53 @@ http://localhost:3000
 
 ---
 
+## User Roles
+
+### Register User 
+- Method: POST
+- URL: /api/auth/register
+```
+{
+  "username": "john",
+  "email": "john@test.com",
+  "password": "123",
+  "role": "admin"
+}
+```
+ ### Login User
+ - Method: POST
+- URL: /api/auth/login
+```
+{
+  "email": "john@test.com",
+  "password": "123"
+}
+```
+ ### Response
+```
+{
+  "token": "JWT_TOKEN_HERE",
+  "user": {
+    "id": 1,
+    "role": "admin"
+  }
+}
+```
+ ### Authorization 
+  - Authorization: Bearer YOUR_TOKEN_HERE
+    
+---
+
+ ## User Roles
+
+ ### Admin
+  - Create, update, and delete tournaments, teams, and matches
+### Guest 
+
+  - Can only view data (GET requests)
+  - Cannot create or modify data 
+---
+
 ## API Endpoints (CRUD Documentation) https://documenter.getpostman.com/view/52400511/2sBXitCTC5
 
 ### Tournaments Resource
