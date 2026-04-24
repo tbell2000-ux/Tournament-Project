@@ -73,6 +73,8 @@ http://localhost:3000
 
 ## API Endpoints (CRUD Documentation) https://documenter.getpostman.com/view/52400511/2sBXitCTC5
 
+## API URL from Render: https://tournament-project-5msy.onrender.com/
+
 ### Tournaments Resource
 
 ---
