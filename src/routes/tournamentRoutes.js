@@ -9,11 +9,14 @@ const {
   deleteTournament
 } = require("../controllers/tournamentController");
 
+const auth = require("../middleware/auth");
+const admin = require("../middleware/admin");
 
-router.post("/", createTournament);
 router.get("/", getAllTournaments);
 router.get("/:id", getTournament);
-router.put("/:id", updateTournament);
-router.delete("/:id", deleteTournament);
+
+router.post("/", auth, admin, createTournament);
+router.put("/:id", auth, admin, updateTournament);
+router.delete("/:id", auth, admin, deleteTournament);
 
 module.exports = router;

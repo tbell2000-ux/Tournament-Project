@@ -12,27 +12,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0
     },
-    teamAId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    teamBId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
+    teamAId: DataTypes.INTEGER,
+    teamBId: DataTypes.INTEGER
   });
-
-  Match.associate = (models) => {
-    Match.belongsTo(models.Team, {
-      as: "teamA",
-      foreignKey: "teamAId"
-    });
-
-    Match.belongsTo(models.Team, {
-      as: "teamB",
-      foreignKey: "teamBId"
-    });
-  };
 
   return Match;
 };

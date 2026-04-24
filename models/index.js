@@ -2,40 +2,18 @@ const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
 
-const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: "./database.sqlite",
-  logging: false
-});
+const sequelize = require("../database");
 
 const db = {};
 
 fs.readdirSync(__dirname)
-  .filter(file => file.endsWith(".js") && file !== "index.js")
+  .filter(file => file !== "index.js" && file.endsWith(".js"))
   .forEach(file => {
-    const modelExport = require(path.join(__dirname, file));
-
-    let model;
-
-    
-    if (typeof modelExport === "function" && modelExport.length === 2) {
-      model = modelExport(sequelize, Sequelize.DataTypes);
-    }
-
-    
-    else if (modelExport && modelExport.name) {
-      model = modelExport;
-    }
-
-    
-    else {
-      throw new Error(`Invalid model format in file: ${file}`);
-    }
-
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
 
-// run associations
+// associations
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

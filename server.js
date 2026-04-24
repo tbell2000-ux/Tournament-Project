@@ -1,7 +1,12 @@
 const app = require("./app");
+const db = require("./models");
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+db.sequelize.sync({ alter: true }).then(() => {
+  console.log("Database synced");
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 });
