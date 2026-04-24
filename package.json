@@ -8,7 +8,8 @@
     "test": "jest --detectOpenHandles --forceExit",
     "dev": "nodemon server.js",
     "setup": "node src/config/setupDatabase.js",
-    "seed": "node src/config/seedDatabase.js"
+    "seed": "node src/config/seedDatabase.js",
+    "postinstall": "npm rebuild sqlite3 --build-from-source"
   },
   "repository": {
     "type": "git",
